@@ -1,7 +1,7 @@
 function checkGoal () {
     if (count == 20) {
         basic.showString("Great!")
-        basic.showIcon(IconNames.Fabulous)
+        basic.showIcon(IconNames.Heart)
         basic.pause(500)
         basic.showNumber(count)
     }
