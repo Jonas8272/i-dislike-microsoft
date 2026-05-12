@@ -1,15 +1,49 @@
+function checkGoal () {
+    if (count == 20) {
+        basic.showString("Great!")
+        basic.showIcon(IconNames.Heart)
+        basic.pause(500)
+        basic.showNumber(count)
+    }
+}
+// Reset
 input.onButtonPressed(Button.A, function () {
-    basic.showString("Love u ")
-    // Displays a big smiling face
-    basic.showIcon(IconNames.Heart)
+    basic.showString("Done! XD")
+    count = 0
+    started = false
+    basic.clearScreen()
 })
+// Manual Count
 input.onButtonPressed(Button.B, function () {
-    basic.showString("Hello!XD")
+    started = true
+    count += 1
+    lastShake = input.runningTime()
+    basic.showNumber(count)
+    checkGoal()
 })
+// Shake Count
 input.onGesture(Gesture.Shake, function () {
-    music.play(music.createSoundExpression(WaveShape.Noise, 500, 499, 255, 0, 750, SoundExpressionEffect.None, InterpolationCurve.Linear), music.PlaybackMode.UntilDone)
-    music.play(music.tonePlayable(262, music.beat(BeatFraction.Whole)), music.PlaybackMode.UntilDone)
+    if (!(started)) {
+        started = true
+        count = 0
+    }
+    count += 1
+    lastShake = input.runningTime()
+    basic.showNumber(count)
+    checkGoal()
 })
+let lastShake = 0
+let started = false
+let count = 0
+basic.showString("Hello! XD")
 basic.forever(function () {
-	
+    if (!(started)) {
+        basic.showIcon(IconNames.SmallDiamond)
+    } else {
+        // If no shake for 3 seconds
+        if (input.runningTime() - lastShake > 3000) {
+            basic.showIcon(IconNames.Asleep)
+        }
+    }
+    basic.pause(100)
 })
